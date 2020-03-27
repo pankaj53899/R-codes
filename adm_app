@@ -1,0 +1,15 @@
+admin_approval_ui<-div(id="Admin_UI_page",style="font-family: 'BG Flame'",
+                         fluidPage(
+                           fluidRow(h3(strong("Manage Access Requests"),align="center")),
+                           hr(),
+                           fluidRow(column(11,h4("Pending access requests"))
+                                    ,column(1,align="right",actionButton("logout_admin","",icon=icon("power-off")))),
+                           hr(),
+                           column(12,dataTableOutput("Main_table_access")),
+                           tags$script("$(document).on('click', '#Main_table_access button', function () {
+                      Shiny.onInputChange('lastClickId',this.id);
+                      Shiny.onInputChange('lastClick', Math.random())});")
+                         )
+                         
+)
+
