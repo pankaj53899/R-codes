@@ -1,0 +1,161 @@
+
+humanTime <- function() format(Sys.time(), "%Y%m%d-%H%M%OS")
+
+
+formData <- reactive({
+  data<-vals$Data
+  data<-data$timestamp=humanTime()
+  data
+})
+
+loadData_crt_site <- function() {
+  files <- list.files(file.path("./Data_crt_site"), full.names = TRUE)
+  data <- lapply(files, read.csv, colClasses=c("Description"="character","People"="character","Systems_other"="character","Facilities_other"="character","Vulnerable_customers"="character"
+  ), stringsAsFactors = FALSE)
+  data <- dplyr::bind_rows(data)
+  data
+}
+
+
+loadData_crt_comms <- function() {
+  files <- list.files(file.path("./Data_crt_comms"), full.names = TRUE)
+  # data <- read.csv('test.csv', colClasses=c("time"="character"))
+  data <- lapply(files, read.csv, colClasses=c("Incident_number"="character"), stringsAsFactors = FALSE)
+  data <- dplyr::bind_rows(data)
+  data
+}
+
+
+loadData_crt_ops <- function() {
+  files <- list.files(file.path("./Data_crt_ops"), full.names = TRUE)
+  # data <- read.csv('test.csv', colClasses=c("time"="character"))
+  data <- lapply(files, read.csv,  stringsAsFactors = FALSE)
+  data <- dplyr::bind_rows(data)
+  data
+}
+
+
+#read files in Data_sit_rep folder
+loadData_site_rep <- function() {
+  files <- list.files(file.path("./Data_sit_rep"), full.names = TRUE)
+  data <- lapply(files, read.csv,colClasses=c("Chairperson"="character","Summary"="character","Updates"="character","Owner"="character","Action"="character",
+                                              "Updates2"="character"), stringsAsFactors = FALSE)
+  data <- dplyr::bind_rows(data)
+  data
+}
+
+#read files in Data_site_IMT folder
+loadData_site_imt <- function() {
+  files <- list.files(file.path("./Data_site_IMT"), full.names = TRUE)
+  data <- lapply(files, read.csv,colClasses=c("Estimated_volume_of_users_impacted"="character","Root_cause"="character","Description"="character"), stringsAsFactors = FALSE)
+  data <- dplyr::bind_rows(data)
+  data
+}
+
+#read files in Data_site_NR folder
+loadData_site_nr <- function() {
+  files <- list.files(file.path("./Data_site_NR"), full.names = TRUE)
+  data <- lapply(files, read.csv, colClasses=c("Escalated_to"="character","Comments"="character"),stringsAsFactors = FALSE)
+  data <- dplyr::bind_rows(data)
+  data
+}
+
+#read files in Data_site_RP folder
+loadData_site_rp <- function() {
+  files <- list.files(file.path("./Data_site_RP"), full.names = TRUE)
+  data <- lapply(files, read.csv,colClasses=c("Changed"="character"), stringsAsFactors = FALSE)
+  data <- dplyr::bind_rows(data)
+  data
+}
+
+#read files in Data_site_RP folder- step4
+loadData_site_rp_step4 <- function() {
+  files <- list.files(file.path("./Data_site_RP_step4"), full.names = TRUE)
+  data <- lapply(files, read.csv,colClasses=c("ivr_msg_details"="character","online_msg_details"="character","site_rp_actions_s4"="character"), stringsAsFactors = FALSE)
+  data <- dplyr::bind_rows(data)
+  data
+}
+
+#read files in Data_site_RP folder- step5
+loadData_site_rp_step5 <- function() {
+  files <- list.files(file.path("./Data_site_RP_step5"), full.names = TRUE)
+  data <- lapply(files, read.csv,colClasses=c("lines_closed_rp"="character","calls_diverted_from_rp"="character","calls_diverted_to_rp"="character",
+                                              "site_rp_actions_s5"="character"), stringsAsFactors = FALSE)
+  data <- dplyr::bind_rows(data)
+  data
+}
+
+
+#read files in Data_site_RP folder- step6
+loadData_site_rp_step6 <- function() {
+  files <- list.files(file.path("./Data_site_RP_step6"), full.names = TRUE)
+  data <- lapply(files, read.csv,colClasses=c("fte_impacted_rp"="character","issue_rp"="character","site_rp_actions_s6"="character"), stringsAsFactors = FALSE)
+  data <- dplyr::bind_rows(data)
+  data
+}
+
+
+#read files in Data_site_RP folder- step7
+loadData_site_rp_step7 <- function() {
+  files <- list.files(file.path("./Data_site_RP_step7"), full.names = TRUE)
+  data <- lapply(files, read.csv,colClasses=c("fte_impacted_rp1"="character","issue_rp1"="character","site_rp_actions_s7"="character"), stringsAsFactors = FALSE)
+  data <- dplyr::bind_rows(data)
+  data
+}
+
+
+
+#count filled imt
+count_imt_involvement <- function() {
+  files <- list.files(file.path("./Data_site_IMT"), full.names = TRUE)
+  data <- lapply(files, read.csv, stringsAsFactors = FALSE)
+  data <- dplyr::bind_rows(data)
+  count_imt1<-sqldf("select count(distinct INC) as cnt from data where Who_is_impacted!='' and Is_current_imt=1")
+  count_imt1$cnt
+}
+
+#count filled nr
+count_nr_involvement <- function() {
+  files <- list.files(file.path("./Data_site_NR"), full.names = TRUE)
+  data <- lapply(files, read.csv, stringsAsFactors = FALSE)
+  data <- dplyr::bind_rows(data)
+  count_nr1<-sqldf("select count(distinct INC) as cnt from data where Action_required!='' and Is_current_nr=1")
+  count_nr1$cnt
+}
+
+#count filled rp
+count_rp_involvement <- function() {
+  files <- list.files(file.path("./Data_site_RP_step4"), full.names = TRUE)
+  data <- lapply(files, read.csv, stringsAsFactors = FALSE)
+  files1 <- list.files(file.path("./Data_site_RP_step5"), full.names = TRUE)
+  data1 <- lapply(files1, read.csv, stringsAsFactors = FALSE)
+  
+  files2 <- list.files(file.path("./Data_site_RP_step6"), full.names = TRUE)
+  data2 <- lapply(files2, read.csv, stringsAsFactors = FALSE)
+  files3 <- list.files(file.path("./Data_site_RP_step7"), full.names = TRUE)
+  data3 <- lapply(files3, read.csv, stringsAsFactors = FALSE)
+  data <- dplyr::bind_rows(data,data1,data2,data3)
+  count_rp1<-sqldf("select count(distinct INC_rp) as cnt from data where Is_current=1")
+  count_rp1$cnt
+}
+
+#based on Shiny textAreaInput
+textAreaInput2 <- function (inputId, label, value = "", width = NULL, height = NULL, 
+                            cols = NULL, rows = NULL, placeholder = NULL, resize = NULL) 
+{
+  value <- restoreInput(id = inputId, default = value)
+  if (!is.null(resize)) {
+    resize <- match.arg(resize, c("both", "none", "vertical", 
+                                  "horizontal"))
+  }
+  style <- paste("max-width: 100%;", if (!is.null(width)) 
+    paste0("width: ", validateCssUnit(width), ";"), if (!is.null(height)) 
+      paste0("height: ", validateCssUnit(height), ";"), if (!is.null(resize)) 
+        paste0("resize: ", resize, ";"))
+  if (length(style) == 0) 
+    style <- NULL
+  div(class = "form-group", 
+      tags$label(label, `for` = inputId), tags$textarea(id = inputId, 
+                                                        class = "form-control", placeholder = placeholder, style = style, 
+                                                        rows = rows, cols = cols, value))
+}
