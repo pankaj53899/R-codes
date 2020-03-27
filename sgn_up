@@ -1,0 +1,34 @@
+sign_up_page_ui<-div(style="font-family: 'BG Flame';color: #4472c4",
+  id = "Signup_page",
+  
+  fluidRow(column(12,img(src='heading_bar.png',width='100%'))),
+  
+  fluidRow(column(3,img(src='risk_img.png',width='100%')),
+           column(9,tags$br(),
+                  fluidRow(column(11,h2("Sign-up Page",style="font-family: 'BG Flame"),align="center"),
+                           column(1,align="center",#actionButton("back_signin_p", "Back",style="background-color: #4472c4;color:#ffffff"))),
+                                  actionBttn(
+                                    inputId = "back_signin_p",
+                                    label = "Back",
+                                    style = "unite",
+                                    color = "primary"))),
+                  hr(),
+                  fluidRow(column(11,strong(p("Welcome to the Resilience Planning and Response Tool",align="center"))),
+                  fluidRow(column(11,p("This portal allows the user to create new incidents as well as update and close them.",align="center" ))),
+                  fluidRow(column(11,p("We can also track active incidents through the audit trail.",align="center"))),
+                  tags$br(),      
+                  fluidRow(column(11,textInput("signup_id","Email ID: "),align="center")),
+                  fluidRow(column(11,textInput("signup_lan","Lan ID: "),align="center")),
+                  tags$br(),
+                  fluidRow(column(11,align="center", #actionButton("signup_but", "Sign-up",style="background-color: #4472c4;color:#ffffff"))),
+                                  actionBttn(
+                                    inputId = "signup_but",
+                                    label = "Sign-up",
+                                    style = "unite",
+                                    color = "primary"))),
+                  hr(),
+                  #fluidRow(column(11,align="center",actionButton("back_signin_p", "Sign-in Page"))),
+                  #tags$br(),
+                  fluidRow(column(11,align="center",p("NOTE: You will get your login credentials on registered email ID.")))))))
+                             
+                             
