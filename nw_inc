@@ -1,0 +1,368 @@
+
+source("Imports/Import_meta.R")
+
+
+Raise_inc_tab<-tabItem(
+  tabName = "Raise_inc",
+  
+  ########################## Raise new incidents page #######################
+  
+  div(id="form",style="font-family: 'BG Flame';",
+      fluidPage(
+        fluidRow(column(6,h3("RAISE AN INCIDENT",align="left",style="font-family: 'BG Flame';color: #4472c4"))),
+      gradientBox(
+        title = p("Step 1. ",style="font-family: 'BG Flame'"),
+        icon = "fa fa-edit",
+        gradientColor = 'blue',
+        boxToolSize = "xs",
+        footer_padding = TRUE,
+        width = 12,
+        closable = FALSE,
+        footer = 
+          fluidPage(
+            fluidRow(
+              column(3,
+              pickerInput(
+                inputId = "Site",
+                label = "Site",
+                choices = c(unique(Recommendations$Site))
+                #selected = unique(Recommendations$Site)[1]
+              )),
+              column(3,
+                     awesomeCheckboxGroup(
+                       inputId = "Bus_Ar",
+                       label = "Business Area",
+                       choices = c(unique(Recommendations$Business_Area)),
+                       status = "success"
+                     )),
+              column(3,
+                     awesomeCheckboxGroup(
+                       inputId = "pro_Ar",
+                       label = "Process Area",
+                       choices = c(unique(Recommendations$Process)),
+                       status = "success"
+                     )),
+              column(3,textAreaInput("desc","Incident description",height = 200))
+            )
+          ),
+        p(" Add details for impacted sites:",style="font-family: 'BG Flame'")
+      ),
+      
+      
+      gradientBox(
+        title = p("Step 2. ",style="font-family: 'BG Flame'"),
+        icon = "fa fa-users",
+        gradientColor = 'blue',
+        boxToolSize = "xs",
+        footer_padding = TRUE,
+        width = 12,
+        closable = FALSE,
+        footer = fluidPage(
+          fluidRow(),
+          fluidRow(column(12,
+          awesomeCheckboxGroup(
+            inputId = "eng_team",
+            label = "Teams", 
+            choices = c("Site", "Resource & Planning", "National resilience"),
+            #selected = "A",
+            inline = TRUE, 
+            status = "primary"
+          )))),
+        p("Engagement: ",style="font-family: 'BG Flame'")
+      ),
+      
+      
+      gradientBox(
+        title = p("Step 3. ",style="font-family: 'BG Flame'"),
+        icon = "fa fa-tachometer-alt",
+        gradientColor = 'blue',
+        boxToolSize = "xs",
+        footer_padding = TRUE,
+        width = 12,
+        closable = FALSE,
+        footer = 
+            fluidPage(
+              fluidRow(
+                column(2,textInput("People","People (Volume)")),
+                column(2,div(style="display: inline-block;",awesomeCheckboxGroup(
+                  inputId = "cust_cont",
+                  label = "Customer contact",
+                  choices = c("Inbound","Outbound", "Webchat", "Social Media",'Email','Other'),
+                  #selected = "A",
+                  status = "primary"
+                ))),
+                column(3,fluidRow(column(12,div(style="display: inline-block",awesomeCheckboxGroup(
+                  inputId = "systems",
+                  label = "Systems",
+                  choices = c('No systems impacted',"BG Online", "Agent Workbench", "Trilliant Phase 3 Head End",'SMART PAYGE','BGSM Metering Application',
+                              'Engineer Workbench','WMIS','MVW/GVW','BGR & BGS SAP CRM','BGR & BGS Billing SAP','Call Delivery (shared)',
+                              'SMART Industry Integration Hub','Taskforce','Other'),
+                  status = "primary"
+                )))),
+                shinyjs::hidden(
+                  div(id="other_sys_req",
+                      fluidRow(column(12,textInput("other_system","Enter other system",value="")))))),
+
+                column(3,fluidRow(column(12,div(style="display: inline-block;",awesomeCheckboxGroup(
+                  inputId = "facilities",
+                  label = "Facilities",
+                  choices = c('No facilities impacted',"Fire Evacuation", "Electricity outage", "Catering issues",'Water supply issues','Ice / snow on walkways and carparks',
+                              'Damage to the building','Safety / Security alarm malfunctions','Gas explosion / escape','Bomb threat / security alert',
+                              'Flooding','Other'),
+                  status = "primary"
+                )))),
+                shinyjs::hidden(
+                  div(id="other_fac_req",
+                      fluidRow(column(12,textInput("other_fac","Enter other facility",value="")))))),
+
+                column(2,fluidRow(column(12,"Vulnerable customers"),style="font-weight: bold"),
+                       fluidRow(column(12,switchInput(
+                         inputId = "vuln_cust",
+                         onLabel = "Yes",
+                         offLabel = "No",
+                         onStatus = "primary",
+                         offStatus = "danger"
+                       )),style="margin-top:5px"))
+              )
+            ),
+        p("Enter impact of the incident: ",style="font-family: 'BG Flame'")
+      )
+      
+      # gradientBox(
+      #   title = p("Step 3. ",style="font-family: 'BG Flame'"),
+      #   icon = "fa fa-tachometer-alt",
+      #   gradientColor = 'blue',
+      #   boxToolSize = "xs",
+      #   footer_padding = TRUE,
+      #   width = 12,
+      #   closable = FALSE,
+      #   footer = 
+      #     fluidPage(
+      #       fluidRow(
+      #         column(2,textInput("People","People (Volume)")),
+      #         column(2,awesomeCheckboxGroup(
+      #           inputId = "cust_cont",
+      #           label = "Customer contact",
+      #           choices = c("Inbound","Outbound", "Webchat", "Social Media",'Email','Other'),
+      #           #selected = "A",
+      #           status = "primary"
+      #         )),
+      #         column(3,fluidRow(column(12,awesomeCheckboxGroup(
+      #           inputId = "systems",
+      #           label = "Systems",
+      #           choices = c('No systems impacted',"BG Online", "Agent Workbench", "Trilliant Phase 3 Head End",'SMART PAYGE','BGSM Metering Application',
+      #                       'Engineer Workbench','WMIS','MVW/GVW','BGR & BGS SAP CRM','BGR & BGS Billing SAP','Call Delivery (shared)',
+      #                       'SMART Industry Integration Hub','Taskforce','Other'),
+      #           status = "primary"
+      #         ))),
+      #         shinyjs::hidden(
+      #           div(id="other_sys_req",
+      #               fluidRow(column(12,textInput("other_system","Enter other system",value="")))))),
+      #         
+      #         column(3,fluidRow(column(12,awesomeCheckboxGroup(
+      #           inputId = "facilities",
+      #           label = "Facilities",
+      #           choices = c('No facilities impacted',"Fire Evacuation", "Electricity outage", "Catering issues",'Water supply issues','Ice / snow on walkways and carparks',
+      #                       'Damage to the building','Safety / Security alarm malfunctions','Gas explosion / escape','Bomb threat / security alert',
+      #                       'Flooding','Other'),
+      #           status = "primary"
+      #         ))),
+      #         shinyjs::hidden(
+      #           div(id="other_fac_req",
+      #               fluidRow(column(12,textInput("other_fac","Enter other facility",value="")))))),
+      #         
+      #         column(2,fluidRow(column(12,"Vulnerable customers"),style="font-weight: bold"),
+      #                fluidRow(column(12,switchInput(
+      #                  inputId = "vuln_cust",
+      #                  onLabel = "Yes",
+      #                  offLabel = "No",
+      #                  onStatus = "primary",
+      #                  offStatus = "danger"
+      #                )),style="margin-top:5px"))
+      #       )
+      #     ),
+      #   p("Enter impact of the incident: ",style="font-family: 'BG Flame'")
+      # )
+      
+      )),
+      
+      div(id="form1",style="font-family: 'BG Flame';",
+          fluidPage(
+      gradientBox(
+        title = p("Step 4. ",style="font-family: 'BG Flame'"),
+        icon = "fa fa-plus-circle",
+        gradientColor = 'blue',
+        boxToolSize = "xs",
+        footer_padding = TRUE,
+        width = 12,
+        closable = FALSE,
+        footer = 
+          fluidPage( fluidRow(
+            column(width = 4,
+                   actionBttn(
+                     inputId = "addsite",
+                     label = "Add Site",
+                     style = "unite",
+                     color = "primary"
+                   ))
+          ),
+          fluidRow(column(12, uiOutput("tempSite")))
+          ),
+          p("Add sites to the incident: ",style="font-family: 'BG Flame'")  
+      ),
+      
+      
+      gradientBox(
+        title = p("Step 5. ",style="font-family: 'BG Flame'"),
+        icon = "fa fa-thumbs-up",
+        gradientColor = 'blue',
+        boxToolSize = "xs",
+        footer_padding = TRUE,
+        width = 12,
+        closable = FALSE,
+        footer = 
+          fluidPage(
+            fluidRow(column(6,
+                            radioButtons("get_reco",
+                                         "Show/Hide recommendations",
+                                         choices = c("Hide","Show"),inline = TRUE))),
+            shinyjs::hidden(
+              div(
+                id="Get_reco_new_inc",
+                fluidRow(
+                  column(width = 12,dataTableOutput("reco_new"))
+                )
+              )
+            )),
+        p("Get recommendations: ",style="font-family: 'BG Flame'")  
+      ),
+       
+      
+      gradientBox(
+        title = p("Step 6. ",style="font-family: 'BG Flame'"),
+        icon = "fa fa-envelope-open-text",
+        gradientColor = 'blue',
+        boxToolSize = "xs",
+        footer_padding = TRUE,
+        width = 12,
+        footer = 
+          fluidPage(
+            fluidRow(),
+            fluidRow(
+              column(2,fluidRow(column(12,"Comms required"),style="font-weight: bold"),
+                     fluidRow(column(12,switchInput(
+                       inputId = "comm_req",
+                       value = FALSE,
+                       onLabel = "Yes",
+                       offLabel = "No",
+                       onStatus = "primary",
+                       offStatus = "danger"
+                     )),style="margin-top:5px"))),
+            shinyjs::hidden(
+              div(
+                id="comm_requ_details",
+                fluidRow(
+                  column(2,textInput("inc_no","Incident Number")),
+                  column(2,offset = 2,fluidRow(column(12,"SLT/Head of comms"),style="font-weight: bold;"),
+                         fluidRow(column(12,switchInput(
+                           inputId = "head_comm",
+                           onLabel = "Yes",
+                           offLabel = "No",
+                           onStatus = "primary",
+                           offStatus = "danger")),style="margin-top:5px;")),
+                  column(2,fluidRow(column(12,"IMT"),style="font-weight: bold"),
+                         fluidRow(column(12,switchInput(
+                           inputId = "imt",
+                           onLabel = "Yes",
+                           offLabel = "No",
+                           onStatus = "primary",
+                           offStatus = "danger")),style="margin-top:5px;")),
+                  column(2,fluidRow(column(12,"People comms."),style="font-weight: bold"),
+                         fluidRow(column(12,switchInput(
+                           inputId = "people_comms",
+                           onLabel = "Yes",
+                           offLabel = "No",
+                           onStatus = "primary",
+                           offStatus = "danger")),style="margin-top:5px;")),
+                  column(2,fluidRow(column(12,"Modes of operations invoked"),style="font-weight: bold"),
+                         fluidRow(column(12,switchInput(
+                           inputId = "operations_invok",
+                           onLabel = "Yes",
+                           offLabel = "No",
+                           onStatus = "primary",
+                           offStatus = "danger")),style="margin-top:5px;"))
+                )))),
+        p("Enter details of comms: ",style="font-family: 'BG Flame'")  
+      ),
+      
+      
+      gradientBox(
+        title = p("Step 7. ",style="font-family: 'BG Flame'"),
+        icon = "fa fa-phone-volume",
+        gradientColor = 'blue',
+        boxToolSize = "xs",
+        footer_padding = TRUE,
+        width = 12,
+        closable = FALSE,
+        footer = 
+          fluidPage(
+            fluidRow(
+              column(12,fluidRow(column(12,"Operational call"),style="font-weight: bold"),
+                     fluidRow(column(12,switchInput(
+                       inputId = "operational_call",
+                       value = FALSE,
+                       onLabel = "Yes",
+                       offLabel = "No",
+                       onStatus = "primary",
+                       offStatus = "danger")),style="margin-top:5px"))),
+              shinyjs::hidden(
+                div(id="ops_call_details",
+                fluidRow(
+                column(3, dateInput(
+                inputId = "enter_date",
+                label = "Enter date",
+                format = "yyyy-mm-dd"
+              )),
+              column(3, offset=1, timeInput(
+                inputId="enter_time",
+                label="Enter time (24 Hrs format)",
+                seconds=FALSE))
+              )))),
+        p("Operational call: ",style="font-family: 'BG Flame'")  
+      ),
+      
+      
+      gradientBox(
+        title = p("Step 8. ",style="font-family: 'BG Flame"),
+        icon = "fa fa-download",
+        gradientColor = 'blue',
+        boxToolSize = "xs",
+        footer_padding = TRUE,
+        width = 12,
+        closable = FALSE,
+        footer = 
+          fluidPage(
+            fluidRow(
+              column(width = 4,
+                     actionBttn(
+                       inputId = "submit",
+                       label = "Submit",
+                       style = "unite", 
+                       color = "primary"
+                     )
+            ))),
+        p("Raise incident: ",style="font-family: 'BG Flame'")  
+      )
+      
+  )
+  ),
+
+  
+  shinyjs::hidden(
+    span(id = "submit_msg", "Submitting..."),
+    div(id = "error",
+        div(br(), tags$b("Error: "), span(id = "error_msg"))
+    )
+  )
+)
+
