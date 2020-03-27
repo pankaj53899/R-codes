@@ -1,0 +1,43 @@
+
+/* logo */
+  .skin-blue .main-header .logo {
+    background-color: #0086D6;
+    font-family: "BG Flame";
+    font-weight: bold;
+  font-size: 24px;
+  }
+  
+/* logo when hovered */
+  .skin-blue .main-header .logo:hover {
+    background-color: #0086D6;
+  }
+
+
+/* navbar (rest of the header) */
+  .skin-blue .main-header .navbar {
+    background-color: #0086D6;      /* #4472c4 blue color       #E0E0E0 grey color code      #333F48  dark-grey color code*/
+  }
+  
+/* main sidebar */
+  .skin-blue .main-sidebar {
+    background-color: #1A2226;
+  } 
+
+
+
+
+/* sidebarmenu */
+  .skin-blue .main-sidebar .sidebar .sidebar-menu a{
+    background-color: #1A2226;
+    color: #FFFFFF;
+    font-family: "BG Flame";
+    font-size: 15px;
+    
+  }  
+
+
+/* body */
+  .content-wrapper, .right-side {
+    background-color: #f2f2f2;
+  }
+
