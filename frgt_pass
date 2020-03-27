@@ -1,0 +1,29 @@
+forgot_password_ui<-div(style="font-family: 'BG Flame';color: #4472c4",
+  id = "Forgot_pass_page",
+  
+  fluidRow(column(12,img(src='heading_bar.png',width='100%'))),
+  
+  fluidRow(column(3,img(src='risk_img.png',width='100%')),
+           column(9,tags$br(),
+                  fluidRow(column(11,align="center",h2("Get Password",style="font-family: 'BG Flame")),
+                             column(1,align="left",#actionButton("back_signin3_p", "Back",style="background-color: #4472c4;color:#ffffff"))), 
+                                    actionBttn(
+                                      inputId = "back_signin3_p",
+                                      label = "Back",
+                                      style = "unite",
+                                      color = "primary"))),
+                  hr(),
+                  fluidRow(column(11,strong(p("Welcome to the Resilience Planning and Response Tool",align="center"))),
+                           fluidRow(column(11,p("This portal allows the user to create new incidents as well as update and close them.",align="center" ))),
+                           fluidRow(column(11,p("We can also track active incidents through the audit trail.",align="center"))),
+                  tags$br(),      
+                  fluidRow(column(11,align="center",textInput("pass_signup_id","Email ID: "))),
+                  fluidRow(column(11,align="center", #actionButton("get_pass_p", "Get Password",style="background-color: #4472c4;color:#ffffff"))),
+                                  actionBttn(
+                                    inputId = "get_pass_p",
+                                    label = "Get Password",
+                                    style = "unite",
+                                    color = "primary"))),
+                           
+                  tags$br(),
+                  fluidRow(column(11,align="center",p("Please check your registered email ID after clicking on Get Password.")))))))
