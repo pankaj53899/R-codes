@@ -1,0 +1,66 @@
+source("Imports/Import_meta.R")
+source("Functions/Functions.R")
+
+home_page_tab<-
+  tabItem(
+    tabName = "Home_page",
+
+div(style="font-family: 'BG Flame';color: #4472c4",
+  id = "Home_page_",
+
+
+fluidPage(style="background-color: #ffffff",
+         
+                fluidRow(column(12,h3("Welcome to the Resilience Planning and Response Tool",align="center"))),
+                fluidRow(column(12,p("This portal allows the user to create new incidents as well as update and close them.",align="center"))),
+                fluidRow(column(12,p("We can also track active incidents through the audit trail.",align="center"))),
+                          
+                tags$br(),
+                tags$br(),
+                tags$br(),
+                tags$br(),
+                tags$br(),
+                
+                fluidRow(column(12,img(src='info_bcp.PNG',width='80%'),align="center")),
+                tags$br(),
+                tags$br(),
+                tags$br(),
+                
+                fluidRow(column(12,strong(p("Follow the below link to the Centrica Consumer UK&I Resilience site:",align="center")))),
+                fluidRow(column(12,a("https://centricaplc.sharepoint.com/sites/BusinessContinuity/LoBData/ESSUK/SitePages/Home.aspx",
+                                     href="https://centricaplc.sharepoint.com/sites/BusinessContinuity/LoBData/ESSUK/SitePages/Home.aspx"),align="center")),
+                fluidRow(column(12,p("Here you will find your tools, templates and other relevant Resilience documentation and information",align="center"))),
+                
+          tags$br(),
+          tags$br(),
+
+          tags$br(),
+          tags$br(),
+          tags$br(),
+
+          tags$br(),
+          tags$br(),
+          tags$br(),
+          tags$br(),
+         
+          fluidRow(column(11,actionLink("like_bcp",img(src='like.jpg',width='3%')),align="center")),
+          fluidRow(column(11,strong(p("Tell us that you liked the tool")),align="center")),
+          tags$br(),
+          tags$br(),
+          tags$br(),
+          tags$br(),
+          tags$br(),
+          tags$br(),
+          tags$br(),
+          tags$br(),
+          tags$br(),
+          tags$br()
+          
+                )))
+                           
+                           
+ 
+  
+  
+
+
