@@ -1,0 +1,128 @@
+########################## New NR ############################
+source("Functions/Functions.R")
+
+Site_nr_tab<-tabItem(
+  
+  
+  ####################### Add site  #######################
+  
+  
+  tabName = "NR_mn",
+  
+  div(style="font-family: 'BG Flame';",
+      id = "NR_mod_log",
+      hr(),
+      box(width = "100%",
+          title = span( icon("times circle"), "You do not have access to view this page at present!"),
+          color = "grey", ribbon = TRUE, title_side = "top right",
+          hr(),
+          fluidRow(column(12,h4("Please contact Incident & Resilience Management (zz_sm6496@centrica.com) to request access to view this page",align="left")))
+          
+      ),
+      
+      hr()
+      
+  ),
+  
+  shinyjs::hidden(
+    
+    div(style="font-family: 'BG Flame';",
+        id = "NR_mod_pg",
+        fluidPage(
+          fluidRow(column(6,h3("NATIONAL RESILIENCE",align="left",style="font-family: 'BG Flame';color: #4472c4"))),
+          gradientBox(
+            title = p("Step 1.",style="font-family: 'BG Flame'"),
+            icon = "fa fa-edit",
+            gradientColor = 'blue',
+            boxToolSize = "xs",
+            footer_padding = TRUE,
+            width = 12,
+            closable = FALSE,
+            footer =
+              fluidPage(
+                fluidRow(),
+                fluidRow(column(6,
+                                pickerInput(
+                                  inputId = "NR_mod_inc",
+                                  label = "Enter Incident number",
+                                  choices = c("", unique(loadData_crt_site()$INC)),
+                                  selected = ""
+                                )),
+                         column(1,offset=5,
+                                actionBttn(
+                                  inputId = "Refresh_btn_nr",
+                                  label = "Refresh",
+                                  style = "unite",
+                                  color = "primary")))
+                
+              ),
+            p("Select incident number:",style="font-family: 'BG Flame'")
+          ),
+          
+          gradientBox(
+            title = p("Step 2.",style="font-family: 'BG Flame'"),
+            icon = "fa fa-edit",
+            gradientColor = 'blue',
+            boxToolSize = "xs",
+            footer_padding = TRUE,
+            width = 12,
+            closable = FALSE,
+            footer =
+              fluidPage(
+                fluidRow(),
+                fluidRow(column(12,dataTableOutput("CRT_inc_det2")))
+              ),
+            p("View existing details of the incident:",style="font-family: 'BG Flame'")
+          ),
+          
+          gradientBox(
+            title = p("Step 3.",style="font-family: 'BG Flame'"),
+            icon = "fa fa-edit",
+            gradientColor = 'blue',
+            boxToolSize = "xs",
+            footer_padding = TRUE,
+            width = 12,
+            closable = FALSE,
+            footer =
+              fluidPage(
+                fluidPage(
+                  dataTableOutput("NR_mod_inc_det"),
+                  tags$script("$(document).on('click', '#NR_mod_inc_det button', function () {
+                                                                Shiny.onInputChange('lastClickId',this.id);
+                                                                Shiny.onInputChange('lastClick', Math.random())
+                                                                });")
+                )
+              ),
+            p("Amend NR details:",style="font-family: 'BG Flame'")
+          ),
+          
+          gradientBox(
+            title = p("Step 4. ",style="font-family: 'BG Flame"),
+            icon = "fa fa-download",
+            gradientColor = 'blue',
+            boxToolSize = "xs",
+            footer_padding = TRUE,
+            width = 12,
+            closable = FALSE,
+            footer = 
+              fluidPage(
+                fluidRow(
+                  column(width = 4,
+                         actionBttn(
+                           inputId = "Confirm_NR_mod",
+                           label = "Save changes",
+                           style = "unite", 
+                           color = "primary"
+                         )
+                  ))),
+            p("Confirm changes: ",style="font-family: 'BG Flame'")  
+          )
+          
+          
+        )
+    )
+    
+    
+    
+  )
+)
