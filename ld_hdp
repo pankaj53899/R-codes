@@ -1,0 +1,52 @@
+load_to_hadoop_page_ui<-div(style="font-family: 'BG Flame';color: #4472c4",
+                         id = "load_to_hadoop_page",
+                         fluidPage(),
+                         
+                         fluidRow(column(12,img(src='heading_bar.png',width='100%'))),
+                         
+                         fluidRow(column(3,img(src='risk_img.png',width='100%')),
+                                  column(9,tags$br(),
+                                         
+                                         fluidRow(column(11,align="center",h2("Download Data",style="font-family: 'BG Flame")),
+                                                  column(1,align="left",
+                                                         actionBttn(
+                                                           inputId = "back_signin4_p",
+                                                           label = "Back",
+                                                           style = "unite",
+                                                           color = "primary"))),
+                                         hr(),
+                                         fluidRow(column(11,strong(p("Welcome to the Resilience Planning and Response Tool",align="center"))),
+                                                  fluidRow(column(11,p("This portal allows the user to create new incidents as well as update and close them.",align="center" ))),
+                                                  fluidRow(column(11,p("We can also track active incidents through the audit trail.",align="center"))),
+                                                  tags$br(),          
+                                                  fluidRow(column(11,align="center",textInput("hadoop_login_id","Email ID: "))),
+                                                  fluidRow(column(11,align="center",passwordInput("hadoop_login_pass","Password: "))),
+                                                  fluidRow(column(5,align="right",
+                                                                  actionBttn(
+                                                                    inputId = "Hadoop_login_p",
+                                                                    label = "Login",
+                                                                    style = "unite",
+                                                                    color = "primary")),
+                                                           column(6,offset=1,align="left",
+                                                                  actionBttn(
+                                                                    inputId = "Hadoop_logout_p",
+                                                                    label = "Log out",
+                                                                    style = "unite",
+                                                                    color = "primary"))),
+                                                  shinyjs::hidden(
+                                                    div(style="font-family: 'BG Flame';color: #4472c4",
+                                                        id = "download_data_",
+                                                      
+                                                  fluidRow(column(11,downloadButton("download_signup_data","Download Sign up Data",style="background-color: #4472c4;color:#ffffff"),align="center")),tags$br(),
+                                                  fluidRow(column(11,downloadButton("download_crt_site","Download CRT site Data",style="background-color: #4472c4;color:#ffffff"),align="center")),
+                                                  fluidRow(column(11,downloadButton("download_crt_comms","Download CRT comms Data",style="background-color: #4472c4;color:#ffffff"),align="center")),
+                                                  fluidRow(column(11,downloadButton("download_crt_ops","Download CRT ops Data",style="background-color: #4472c4;color:#ffffff"),align="center")),
+                                                  fluidRow(column(11,downloadButton("download_imt","Download IMT Data",style="background-color: #4472c4;color:#ffffff"),align="center")),
+                                                  fluidRow(column(11,downloadButton("download_nr","Download NR Data",style="background-color: #4472c4;color:#ffffff"),align="center")),
+                                                  fluidRow(column(11,downloadButton("download_sit_rep","Download sit rep Data",style="background-color: #4472c4;color:#ffffff"),align="center")),
+                                                  fluidRow(column(11,downloadButton("download_rp4","Download RP Data step 4",style="background-color: #4472c4;color:#ffffff"),align="center")),
+                                                  fluidRow(column(11,downloadButton("download_rp5","Download RP Data step 5",style="background-color: #4472c4;color:#ffffff"),align="center")),
+                                                  fluidRow(column(11,downloadButton("download_rp6","Download RP Data step 6",style="background-color: #4472c4;color:#ffffff"),align="center")),
+                                                  fluidRow(column(11,downloadButton("download_rp7","Download RP Data step 7",style="background-color: #4472c4;color:#ffffff"),align="center")),
+                                                  tags$br()))
+                                         ))))
