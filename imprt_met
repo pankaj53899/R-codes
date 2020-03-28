@@ -1,8 +1,0 @@
-Recommendations <- read_csv("Recommendations.csv")
-metadata<-read_csv("metadata.csv")
-#View(Recommendations)
-Recommendations<-sqldf("select * from Recommendations order by site, business_area")
-timescale_meta<-sqldf("select distinct Options from metadata where key='Timescale'")
-form_options<-read_csv("form_options.csv")
-options_rp_nr<-read_csv("options_rp_nr.csv")
-
